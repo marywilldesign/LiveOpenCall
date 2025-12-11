@@ -87,9 +87,11 @@ def print_endpoint():
     #    total_height += h+padding
 
     # ---------------- LOAD IMAGE ----------------
-    #if image_file:
-    img = Image.open(image_file).convert("L").point(lambda x:0 if x<128 else 255, "1")
-    #    scale = max_width/img.width
+    has_image = request.form.get("has_image") == "true"
+    if has_image:
+        img = Image.open(image_file).convert("L")#.point(lambda x:0 if x<128 else 255, "1")
+    else:
+        img = Image.new("1", (433, 5), color=1)  # color=1 => white, color=0 => black    #    scale = max_width/img.width
     #    new_height = int(img.height*scale)
     #    img = img.resize((max_width,new_height))
     #else:
@@ -114,7 +116,7 @@ def print_endpoint():
     filepath = os.path.join(UPLOAD_FOLDER, "receipt.png")
     im, w_px, h_px = rg.makeReceipt(text, img, filepath) # this produces a file called receipt.png
 
-    im.save('test.png')
+    #im.save('test.png')
     print_file(filepath, w_px, h_px)
     return "Receipt sent to printer!"
 
