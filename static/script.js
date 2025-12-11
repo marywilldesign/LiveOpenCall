@@ -35,6 +35,9 @@ printBtn.addEventListener("click", async () => {
   //form.set("name", nameInput.value.trim());
   //form.set("title", titleInput.value.trim());
   form.set("text", textInput.value);
+
+  const hasImage = imageFile.files.length > 0;
+  form.set("has_image", hasImage ? "true" : "false");
   
   // send canvas image as file
   if(canvas.width>0 && canvas.height>0){
