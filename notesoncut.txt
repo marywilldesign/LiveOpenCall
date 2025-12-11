@@ -1,0 +1,56 @@
+lp -d Star_TSP143__STR_T_001_  -o 5  spelio.png
+
+
+lpoptions -p Star_TSP143__STR_T_001_ -l 
+PageSize/Media Size: X50D8MMY30MM X50D8MMY40MM X50D8MMY50MM X50D8MMY60MM X50D8MMY70MM X50D8MMY80MM X50D8MMY90MM X50D8MMY100MM X50D8MMY110MM X50D8MMY120MM X50D8MMY130MM X50D8MMY140MM X50D8MMY150MM X50D8MMY160MM X50D8MMY170MM X50D8MMY180MM X50D8MMY190MM X50D8MMY200MM X50D8MMY2000MM X72MMY30MM X72MMY40MM X72MMY50MM X72MMY60MM X72MMY70MM X72M X72MMY100MM X72MMY110MM X72MMY120MM X72MMY130MM X72MMY140MM X72MMY150MM X72MMY160MM X72MMY170MM X72MMY180MM X72MMY190MM *X72MMY200MM X72MMY2000MM A4 Letter Legal Custom.WIDTHxHEIGHT
+PrintSpeed/1. Print Speed: *0High 1Middle 2Low
+PageType/2. Page Type: *0Variable 1Fixed
+PrintDensity/3. Print Density: 0Minus3 1Minus2 2Minus1 *3ZERO 4Plus1 5Plus2 6Plus3
+PageCutType/1. Page Cut Type: *0NoCutPage 1PartialCutPage
+DocCutType/2. Document Cut Type: 0NoCutDoc *1PartialCutDoc
+CashDrawerSetting/1. Cash Drawer: *0DoNotOpenDrawers 1OpenDrawer1 2OpenDrawer2 3OpenDrawer3
+CashDrawer1PulseWidth/2. Cash Drawer 1 Pulse Width: 0Millis10 1Millis100 *2Millis200 3Millis300 4Millis400 5Millis500 6Millis600 7Millis700 8Millis800 9Millis900 10Millis1000 11Millis1100 12Millis1200
+MelodySpeakerSetting/1. mC-Sound: *0NoUse 1DocumentTop 2DocumentBtm
+MelodySpeakerSoundStorageArea/2. mC-Sound - Sound Storage Area: *0Area1 1Area2
+MelodySpeakerSoundNumber/3. mC-Sound - Sound Number: *0Number0 1Number1 2Number2 3Number3 4Number4 5Number5 6Number6 7Number7
+MelodySpeakerSoundVolume/4. mC-Sound - Sound Volume: 0Volume0 1Volume1 2Volume2 3Volume3 4Volume4 5Volume5 *6Volume6 7Volume7 8Volume8 9Volume9 10Volume10 11Volume11 12Volume12 13Volume13 14Volume14 15Volume15
+MelodySpeakerRepeat/5. mC-Sound - Repeat: *0Repeat1 1Repeat2 2Repeat3 3Repeat4 4Repeat5 5Repeat6 6Repeat7 7Repeat8 8Repeat9 9Repeat10
+DataTreatmentRecoverFromError/1. DataTreatmentRecoverFromError: *0NoUse 1ClearDataByDocumentUnit
+(base) marywilson@alls-MacBook-Pro uploads % 
+
+
+
+# update printer to stop cutting
+lpadmin -p "Star_TSP143__STR_T_001_" -o PageCutType=0NoCutPage -o DocCutType=0NoCutPage
+lpadmin -p "Star_TSP143__STR_T_001_" -o PageCutType=0NoCutPage -o DocCutType=0NoCutDoc
+
+lp -d "Star_TSP143__STR_T_001_" -o PageCutType=0NoCutPage -o DocCutType=0NoCutDoc yourfile.txt
+
+
+debugging the page length 
+
+
+job-sheets=none, none media=custom_71.97x199.67mm_71.97x199.67mm sides=one-sided
+
+# Ensure variable mode (run once)
+lpadmin -p "Star_TSP143__STR_T_001_" -o PageType=0Variable -o PageCutType=0NoCutPage -o DocCutType=0NoCutDoc
+
+# Check settings
+lpoptions -p "Star_TSP143__STR_T_001_" -l 
+
+
+
+(base) marywilson@alls-MacBook-Pro uploads % lp -o PageSize=X50D8MMY50MM spelio.png
+request id is Star_TSP143__STR_T_001_-574 (1 file(s))
+(base) marywilson@alls-MacBook-Pro uploads % lp -o PageSize=X72MMY150MM spelio.png 
+request id is Star_TSP143__STR_T_001_-575 (1 file(s))
+(base) marywilson@alls-MacBook-Pro uploads % lp -o PageSize=X72MMY200MM spelio.png
+request id is Star_TSP143__STR_T_001_-576 (1 file(s))
+(base) marywilson@alls-MacBook-Pro uploads % lp -o PageSize=X72MMY10MM spelio.png
+
+lp -o orientation-requested=0 front-gn.jpeg
+
+
+
+
+http://localhost:631 
