@@ -14,7 +14,7 @@ def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
     PAGE_WIDTH_MM = 72  # target paper width (mm)
     PAGE_WIDTH_PT = PAGE_WIDTH_MM * mm  # points
     DPI = 300
-    font_path = './static/fonts/Jacquard24-Regular.ttf'
+    font_path = './static/fonts/Louise-Regular.ttf'
     font_size = 18  # pt
     top_margin_mm = 5
     top_margin_pt = top_margin_mm * mm
@@ -24,8 +24,8 @@ def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
 
     # Register font
     try:
-        pdfmetrics.registerFont(TTFont('Jacquard', font_path))
-        font_name = 'Jacquard'
+        pdfmetrics.registerFont(TTFont('NewEdge666', font_path))
+        font_name = 'NewEdge666'
     except Exception:
         font_name = 'Helvetica'
         print("Font not found; using Helvetica")

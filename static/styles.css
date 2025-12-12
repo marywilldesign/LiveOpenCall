@@ -1,6 +1,20 @@
 @font-face {
+  font-family: 'NewEdge666Test';
+  src: url('/static/fonts/NewEdge666Test-LightRounded.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Jacquard24';
   src: url('/static/fonts/Jacquard24-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NewEdge666Light';
+  src: url('/static/fonts/NewEdge666Test-UltraLightRounded.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -8,54 +22,34 @@
 body {
   background:#000;
   margin:0;
-  padding:14px;
-  font-family: 'Jacquard24', monospace;  /* <- use the font-family name, not the file name */
+  padding:12px;
+  font-family: 'NewEdge666Test';  
 }
 
 .wrap {
   max-width:520px;
   margin:0 auto;
-  padding:16px;
+  padding:12px;
   background:#000;
 }
 
 h1 {
   text-align:center;
-  font-weight:300;
-  margin:6px 0;
+  font-size: 54px;
   color: #fff;
   font-family: 'Jacquard24';
 }
 
 h2 {
-  font-size:12px;
+  font-size:18px;
   color:#ffffff;
   text-align:center;
-  margin:6px 0 12px;
-  font-family: 'Jacquard24';
-}
-
-.status {
-  background:#000;
-  color:#fff;
-  padding:8px;
-  margin-bottom:12px;
-  text-align:center;
+  margin:6px 0 48px;
+  font-family: 'NewEdge666Light';
 }
 
 .hidden { display:none; }
 
-.receipt {
-  width:100%;
-  max-width:384px;
-  margin:0 auto;
-  padding:16px;
-  border:1px dashed #fff;
-  background:#fff;
-  font-size:13px;
-  box-sizing:border-box;
-  transition: transform 0.2s;
-}
 
 .jolt-up {
   animation: jolt 0.4s ease;
@@ -73,43 +67,98 @@ h2 {
   text-align:center;
   opacity:0.6;
   margin:8px 0;
+  color: #fff;
 }
 
-.r-row {
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  margin-bottom:10px;
-}
-
+/*
 .r-label {
-  width:56px;
+  width:84px;
   font-weight:700;
-}
+}*/
+
 
 .r-input, .r-textarea, .r-file {
-  width:100%;
-  padding:6px;
-  font-family:inherit;
-  font-size:13px;
-  box-sizing:border-box;
+  width: 100%;
+  padding: 16px;
+  font-family: 'NewEdge666Light';
+  font-size: 16px;
+  color: #fff;
+  box-sizing: border-box;
+  background: #000;
+  border: 1px dashed #fff;
+  outline: none;
+  resize: none;           /* User can't drag manually */
+  overflow: hidden;       /* Prevent scrollbars */
+  min-height: 140px; 
 }
 
-.r-textarea { min-height:90px; resize:none; }
-
-.r-canvas {
-  width:100%;
-  display:block;
-  border-top:1px solid #eee;
-  margin-top:8px;
+/* Focus state: */
+.r-input:focus,
+.r-textarea:focus{
+  border: 1px dashed #fff700;
 }
+
 
 .btn {
-  width:100%;
-  padding:10px;
-  background:none;
-  border:none;
-  color:#002aff;
-  cursor:pointer;
-  font-size:14px;
+  position: fixed;
+  bottom: 0;              /* stick to bottom */
+  left: 0;                /* full-width anchor */
+  width: 100%;            /* spans the viewport */
+  padding: 24px 48px;
+  background: none;
+  border: none;
+  color: #fff700;
+  background-color: #000;
+  font-family: 'NewEdge666Light';
+  font-size: 24px;
+
+  text-align: center;
+  z-index: 1000;          /* stays above other elements */
+}
+
+.r-file {
+  position: relative;     /* new button*/
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  color: #fff;
+}
+
+.r-file::file-selector-button {
+  visibility: hidden;     /* hide the default browser button */
+  display:none;
+  margin:0;
+}
+
+.r-file::before {
+  content: "or upload a megapixel memory";  /* your custom text */
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  text-align: left;
+  color: #fff700;
+  background: #000;
+  font-family: 'NewEdge666Light';
+  font-size: 16px;
+}
+
+/* Make canvas responsive
+.r-canvas {
+  display: block;
+  width: 100%;       
+  max-width: 100%;   
+  height: auto;  
+  margin-top: 4px;  
+  margin:0;
+  box-sizing: border-box;
+} */
+
+.status {
+  font-family: 'NewEdge666Light';
+  font-size: 16px;
+  color: #fff700;       /* bright yellow, visible on black */
+  text-align: left;
+  margin: 12px 0;       /* some spacing above and below */
 }
