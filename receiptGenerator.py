@@ -118,6 +118,7 @@ def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
         anchor='sw'
     )
 
+    c.setPageRotation(0)
     c.showPage()
     c.save()
 

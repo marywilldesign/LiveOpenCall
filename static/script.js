@@ -107,11 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (res.ok) {
         return true;
       } else {
-        statusBox.textContent = msg || "Oops! Something went wrong, goddammit 😅";
+        statusBox.textContent = msg || "Oops! Something went wrong, goddammit";
         return false;
       }
     } catch (e) {
-      statusBox.textContent = "Oops! Something went wrong, goddammit 😅";
+      statusBox.textContent = "Oops! Something went wrong, goddammit";
       return false;
     }
   }

@@ -6,8 +6,8 @@
 }
 
 @font-face {
-  font-family: 'Jacquard24';
-  src: url('/static/fonts/Jacquard24-Regular.ttf') format('truetype');
+  font-family: 'DeFonte';
+  src: url('/static/fonts/DeFontePlus-Leger.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -20,7 +20,7 @@
 }
 
 body {
-  background:#000;
+  background:#1b0501;
   margin:0;
   padding:12px;
   font-family: 'NewEdge666Test';  
@@ -30,14 +30,14 @@ body {
   max-width:520px;
   margin:0 auto;
   padding:12px;
-  background:#000;
+  background:#1b0501;
 }
 
 h1 {
   text-align:center;
   font-size: 54px;
   color: #fff;
-  font-family: 'Jacquard24';
+  font-family: 'DeFonte';
 }
 
 h2 {
@@ -84,7 +84,7 @@ h2 {
   font-size: 16px;
   color: #fff;
   box-sizing: border-box;
-  background: #000;
+  background: #1b0501;
   border: 1px dashed #fff;
   outline: none;
   resize: none;           /* User can't drag manually */
@@ -95,7 +95,7 @@ h2 {
 /* Focus state: */
 .r-input:focus,
 .r-textarea:focus{
-  border: 1px dashed #fff700;
+  border: 1px dashed #dbd400;
 }
 
 
@@ -107,8 +107,8 @@ h2 {
   padding: 24px 48px;
   background: none;
   border: none;
-  color: #fff700;
-  background-color: #000;
+  color: #dbd400;
+  background-color: #1b0501;
   font-family: 'NewEdge666Light';
   font-size: 24px;
 
@@ -133,13 +133,13 @@ h2 {
 }
 
 .r-file::before {
-  content: "or upload a megapixel memory";  /* your custom text */
+  content: "upload a megapixel memory";  /* your custom text */
   display: block;
   width: 100%;
   padding: 12px 0;
   text-align: left;
-  color: #fff700;
-  background: #000;
+  color: #dbd400;
+  background: #1b0501;
   font-family: 'NewEdge666Light';
   font-size: 16px;
 }
