@@ -19,6 +19,7 @@
   font-style: normal;
 }
 
+
 body {
   background:#1b0501;
   margin:0;
@@ -70,11 +71,34 @@ h2 {
   color: #fff;
 }
 
-/*
+header {
+  position: sticky;
+  top: 0;
+  text-align: center;     /* centers the link */
+  padding: .5rem;
+  z-index: 10;
+  border-bottom: 1px dashed #ffffff86;
+  margin: 0;
+}
+
+.banner-link {
+  color: #dbd400;            /* same as other banner */
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1rem;
+  font-family: 'NewEdge', sans-serif;
+}
+
+
+
+
+
+/*added this formatting to the upload image function*/ 
 .r-label {
   width:84px;
-  font-weight:700;
-}*/
+  color: #dbd400;
+  font-family: 'NewEdge666Light';
+} 
 
 
 .r-input, .r-textarea, .r-file {

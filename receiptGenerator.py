@@ -1,145 +1,142 @@
-# python
 import os
-from io import BytesIO
-from PIL import Image
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import mm
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.utils import ImageReader
-from pdf2image import convert_from_path
+from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
 
 def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
-    # CONFIG (points)
-    PAGE_WIDTH_MM = 72  # target paper width (mm)
-    PAGE_WIDTH_PT = PAGE_WIDTH_MM * mm  # points
-    DPI = 300
-    font_path = './static/fonts/Louise-Regular.ttf'
-    font_size = 18  # pt
-    top_margin_mm = 5
-    top_margin_pt = top_margin_mm * mm
-    line_height_pt = font_size * 1.2  # line spacing in points
-    line_padding_pt = 0  # extra space between lines in points
-    bottom_margin_pt = 5 * mm  # ensure some breathing room at bottom
+    # ======================
+    # CONFIG
+    # ======================
+    PRINTER_WIDTH_PX = 384
 
-    # Register font
+    FONT_SIZE = 48
+    TIMESTAMP_FONT_SIZE = 16   # lighter / smaller
+    LINE_SPACING = int(FONT_SIZE * 1)
+
+    TOP_MARGIN = 10
+    SIDE_MARGIN = 8
+    BOTTOM_MARGIN = 10
+    BG_COLOR = 255  # white
+    TEXT_COLOR = 0  # black
+
+    FONT_PATH = "./static/fonts/DeFontePlus-Leger.ttf"
+
+    # ======================
+    # FONTS
+    # ======================
     try:
-        pdfmetrics.registerFont(TTFont('NewEdge666', font_path))
-        font_name = 'NewEdge666'
+        font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
+        timestamp_font = ImageFont.truetype(FONT_PATH, TIMESTAMP_FONT_SIZE)
     except Exception:
-        font_name = 'Helvetica'
-        print("Font not found; using Helvetica")
+        font = ImageFont.load_default()
+        timestamp_font = ImageFont.load_default()
+        print("⚠️ Font not found — using default")
 
-    # Measure and wrap text to page width (in points)
-    def string_width_pts(s: str) -> float:
-        c = canvas.Canvas(BytesIO(), pagesize=(1, 1))
-        c.setFont(font_name, font_size)
-        w = c.stringWidth(s, font_name, font_size)
-        c._filename = ''
-        return w
+    # ======================
+    # TIMESTAMP
+    # ======================
+    timestamp = f"**{datetime.now().strftime('%d.%m.%Y · %H:%M')}**"
 
-    max_text_width_pts = PAGE_WIDTH_PT - 4 * mm
 
-    text_lines = []
-    for para in text.splitlines():
-        words = para.split()
-        if not words:
-            text_lines.append('')
-            continue
-        current = []
+    # ======================
+    # TEXT WRAPPING
+    # ======================
+    dummy_img = Image.new("L", (PRINTER_WIDTH_PX, 10))
+    draw_dummy = ImageDraw.Draw(dummy_img)
+
+    max_text_width = PRINTER_WIDTH_PX - (SIDE_MARGIN * 2)
+    lines = []
+
+    for paragraph in text.splitlines():
+        words = paragraph.split(" ")
+        current_line = ""
+
         for word in words:
-            test = (' '.join(current + [word]) if current else word)
-            if string_width_pts(test) <= max_text_width_pts:
-                current.append(word)
+            test_line = current_line + (" " if current_line else "") + word
+            bbox = draw_dummy.textbbox((0, 0), test_line, font=font)
+            text_width = bbox[2] - bbox[0]
+
+            if text_width <= max_text_width:
+                current_line = test_line
             else:
-                if current:
-                    text_lines.append(' '.join(current))
-                    current = [word]
-                else:
-                    # truncate a single long word
-                    w = word
-                    while string_width_pts(w) > max_text_width_pts and len(w) > 1:
-                        w = w[:-1]
-                    text_lines.append(w + '...')
-                    current = []
-        if current:
-            text_lines.append(' '.join(current))
+                if current_line:
+                    lines.append(current_line)
+                current_line = word
 
-    # Compute text block height (points)
-    visible_lines = [l for l in text_lines if l.strip() != '']
-    num_lines = len(visible_lines)
-    text_height_pt = 0 if num_lines == 0 else num_lines * line_height_pt + (num_lines - 1) * line_padding_pt
+        if current_line:
+            lines.append(current_line)
 
-    # Add spacer between text and image, expressed in "line units"
-    spacer_height_pt = spacer_lines_between_text_and_image * line_height_pt
+        # blank line between paragraphs
+        lines.append("")
 
-    # Compute image height in points to fit page width
-    pil_img = img  # PIL.Image
-    img_width_pt = PAGE_WIDTH_PT
-    img_height_pt = pil_img.height * (img_width_pt / pil_img.width)
+    if lines and lines[-1] == "":
+        lines.pop()
 
-    # Compute total page height in points (include spacer)
-    content_height_pt = top_margin_pt + text_height_pt + spacer_height_pt + img_height_pt
-    page_height_pt = content_height_pt + bottom_margin_pt
+    text_height = len(lines) * LINE_SPACING
+    spacer_height = spacer_lines_between_text_and_image * LINE_SPACING
 
-    print(f"Auto-height: {content_height_pt/mm:.1f}mm ({page_height_pt/mm:.1f}mm page) | Text lines: {num_lines} | Spacer lines: {spacer_lines_between_text_and_image}")
+    # ======================
+    # IMAGE RESIZE
+    # ======================
+    img_ratio = img.height / img.width
+    img_width = PRINTER_WIDTH_PX
+    img_height = int(img_width * img_ratio)
+    img = img.resize((img_width, img_height), Image.Resampling.LANCZOS)
+    img = img.convert("L")
 
-    # Create PDF
-    c = canvas.Canvas("receipt.pdf", pagesize=(PAGE_WIDTH_PT, page_height_pt))
-    c.setFont(font_name, font_size)
+    # ======================
+    # TIMESTAMP HEIGHT
+    # ======================
+    ts_bbox = draw_dummy.textbbox((0, 0), timestamp, font=timestamp_font)
+    timestamp_height = (ts_bbox[3] - ts_bbox[1]) + 6
 
-    # Optional dashed line at top
-    c.drawString(2 * mm, page_height_pt - top_margin_pt, '-' * 50)
-
-    # Draw text from top down
-    y = page_height_pt - top_margin_pt - line_height_pt
-    for line in text_lines:
-        if line.strip() == '':
-            y -= (line_height_pt + line_padding_pt)
-            continue
-        c.drawString(2 * mm, y, line)
-        y -= (line_height_pt + line_padding_pt)
-
-    # Apply spacer before the image
-    y -= spacer_height_pt
-
-    # Place image with bottom-margin protection
-    img_lower_left_y = y - img_height_pt
-    if img_lower_left_y < bottom_margin_pt:
-        img_lower_left_y = bottom_margin_pt
-
-    c.drawImage(
-        ImageReader(pil_img),
-        0,
-        img_lower_left_y,
-        width=img_width_pt,
-        height=img_height_pt,
-        preserveAspectRatio=True,
-        anchor='sw'
+    # ======================
+    # FINAL IMAGE SIZE
+    # ======================
+    total_height = (
+        TOP_MARGIN +
+        timestamp_height +
+        text_height +
+        spacer_height +
+        img_height +
+        BOTTOM_MARGIN
     )
 
-    c.setPageRotation(0)
-    c.showPage()
-    c.save()
+    receipt = Image.new("L", (PRINTER_WIDTH_PX, total_height), BG_COLOR)
+    draw = ImageDraw.Draw(receipt)
 
-    # Render PDF to PIL
-    img_pdf = convert_from_path("receipt.pdf", dpi=DPI, first_page=1, last_page=1)[0]
-    os.remove("receipt.pdf")
+    # ======================
+    # DRAW TIMESTAMP
+    # ======================
+    y = TOP_MARGIN
+    draw.text(
+        (SIDE_MARGIN, y),
+        timestamp,
+        fill=TEXT_COLOR,
+        font=timestamp_font
+    )
 
-    # Conservative crop (leave a tiny bottom slack to avoid shaving content)
-    bbox = img_pdf.getbbox()
-    if bbox:
-        left, top, right, bottom = bbox
-        bottom = min(bottom + 2, img_pdf.height)
-        img_pdf = img_pdf.crop((left, top, right, bottom))
+    y += timestamp_height
 
-    # Convert to grayscale and resize to target printer width
-    img_png = img_pdf.convert("L")
-    final_width = 384
-    scale = final_width / img_png.width
-    final_height = int(round(img_png.height * scale))
-    img_png = img_png.resize((final_width, final_height), Image.Resampling.LANCZOS)
+    # ======================
+    # DRAW TEXT
+    # ======================
+    for line in lines:
+        if line.strip():
+            draw.text((SIDE_MARGIN, y), line, fill=TEXT_COLOR, font=font)
+        y += LINE_SPACING
 
-    img_png.save(filepath)
-    print('temporary image saved at ', filepath)
-    return img_png, final_width, final_height
+    # spacer
+    y += spacer_height
+
+    # ======================
+    # DRAW IMAGE
+    # ======================
+    receipt.paste(img, (0, y))
+
+    # ======================
+    # SAVE
+    # ======================
+    receipt.save(filepath)
+    print("✅ Receipt image saved:", filepath)
+
+    return receipt, PRINTER_WIDTH_PX, total_height
