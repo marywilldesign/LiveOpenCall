@@ -8,9 +8,9 @@ def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
     # ======================
     PRINTER_WIDTH_PX = 384
 
-    FONT_SIZE = 48
+    FONT_SIZE = 32
     TIMESTAMP_FONT_SIZE = 16   # lighter / smaller
-    LINE_SPACING = int(FONT_SIZE * 1)
+    LINE_SPACING = int(FONT_SIZE * .8)
 
     TOP_MARGIN = 10
     SIDE_MARGIN = 8
@@ -34,7 +34,7 @@ def makeReceipt(text, img, filepath, spacer_lines_between_text_and_image=1):
     # ======================
     # TIMESTAMP
     # ======================
-    timestamp = f"**{datetime.now().strftime('%d.%m.%Y · %H:%M')}**"
+    timestamp = f"{datetime.now().strftime('%d . %m . %Y · %H:%M')}"
 
 
     # ======================
