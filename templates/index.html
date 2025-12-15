@@ -3,10 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Live Open Call</title>
+<title>live open call</title>
 <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+
+  <header>
+    <a href="https://art-kive.github.io/art-kive/" class="banner-link">home home home home home</a>
+  </header>
 
 <div class="wrap">
 
@@ -25,10 +29,11 @@
   <div>
 
     <div id="imageBlock" class="r-block">
-      <input id="imageFile" type="file" accept="image/*" class="r-file">
-      <canvas id="previewCanvas" class="r-canvas"></canvas>
-    </div>
-  </div>
+  <label for="imageFile" class="r-label">or upload image</label>
+  <input id="imageFile" type="file" accept="image/*" class="r-file">
+  <canvas id="previewCanvas" class="r-canvas"></canvas>
+</div> <!--updated this to add a label-->
+
 
  <button id="btn" class="btn">send to printer</button> 
 </div>
