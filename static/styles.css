@@ -37,13 +37,13 @@ body {
 h1 {
   text-align:center;
   font-size: 54px;
-  color: #fff;
+  color: #e3e3e3;
   font-family: 'DeFonte';
 }
 
 h2 {
   font-size:18px;
-  color:#ffffff;
+  color:#e3e3e3;
   text-align:center;
   margin:6px 0 48px;
   font-family: 'NewEdge666Light';
@@ -68,7 +68,7 @@ h2 {
   text-align:center;
   opacity:0.6;
   margin:8px 0;
-  color: #fff;
+  color: #e3e3e3;
 }
 
 header {
@@ -77,12 +77,12 @@ header {
   text-align: center;     /* centers the link */
   padding: .5rem;
   z-index: 10;
-  border-bottom: 1px dashed #ffffff86;
+  border-bottom: 1px dashed #e3e3e3;
   margin: 0;
 }
 
 .banner-link {
-  color: #dbd400;            /* same as other banner */
+  color: #eaff00e9;            /* same as other banner */
   text-decoration: none;
   font-weight: normal;
   font-size: 1rem;
@@ -96,7 +96,7 @@ header {
 /*added this formatting to the upload image function*/ 
 .r-label {
   width:84px;
-  color: #dbd400;
+  color: #eaff00e9;
   font-family: 'NewEdge666Light';
 } 
 
@@ -106,10 +106,10 @@ header {
   padding: 16px;
   font-family: 'NewEdge666Light';
   font-size: 16px;
-  color: #fff;
+  color: #e3e3e3;
   box-sizing: border-box;
   background: #1b0501;
-  border: 1px dashed #fff;
+  border: 1px dashed #e3e3e3;
   outline: none;
   resize: none;           /* User can't drag manually */
   overflow: hidden;       /* Prevent scrollbars */
@@ -119,7 +119,7 @@ header {
 /* Focus state: */
 .r-input:focus,
 .r-textarea:focus{
-  border: 1px dashed #dbd400;
+  border: 1px dashed #eaff00e9;
 }
 
 
@@ -131,7 +131,7 @@ header {
   padding: 24px 48px;
   background: none;
   border: none;
-  color: #dbd400;
+  color: #eaff00e9;
   background-color: #1b0501;
   font-family: 'NewEdge666Light';
   font-size: 24px;
@@ -147,7 +147,7 @@ header {
   margin: 0;
   border: none;
   background: none;
-  color: #fff;
+  color: #e3e3e3;
 }
 
 .r-file::file-selector-button {
@@ -157,7 +157,7 @@ header {
 }
 
 .r-file::before {
-  content: "upload a megapixel memory";  /* your custom text */
+ /* content: "upload a megapixel memory";  /* your custom text */
   display: block;
   width: 100%;
   padding: 12px 0;
